@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinity Love - Milly 💕</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+}
+
+#lockScreen{
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(to top,#ff0080,#7928ca);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:5;
+}
+
+input{
+padding:15px;
+border-radius:20px;
+border:none;
+font-size:18px;
+}
+
+button{
+padding:15px 25px;
+border:none;
+border-radius:30px;
+font-size:18px;
+background:#ff1493;
+color:white;
+margin-top:10px;
+}
+
+#mainContent{
+display:none;
+position:absolute;
+width:100%;
+top:40%;
+z-index:3;
+}
+
+h1{
+font-size:40px;
+text-shadow:0 0 20px pink;
+}
+
+#counter{
+font-size:22px;
+margin-top:10px;
+}
+
+#surprise{
+display:none;
+margin-top:15px;
+font-size:20px;
+color:#ff69b4;
+}
+</style>
+</head>
+
+<body>
+
+<div id="lockScreen">
+<h2>Enter Password 💖</h2>
+<input type="password" id="pass" placeholder="Hint: Her Name ❤️">
+<button onclick="unlock()">Unlock Love</button>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<div id="mainContent">
+<h1>💕 Milly 💕</h1>
+<p>I Love You For Infinity ♾️</p>
+<div id="counter"></div>
+<button onclick="showSurprise()">Tap For Secret ✨</button>
+<div id="surprise">You are my forever, my always, my infinity. 💞</div>
+</div>
+
+<audio autoplay loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let hearts=[];
+
+class Heart{
+constructor(){
+this.x=Math.random()*canvas.width;
+this.y=canvas.height+20;
+this.size=Math.random()*20+10;
+this.speed=Math.random()*2+1;
+}
+update(){
+this.y-=this.speed;
+if(this.y<-20){
+this.y=canvas.height+20;
+this.x=Math.random()*canvas.width;
+}
+}
+draw(){
+ctx.fillStyle="rgba(255,105,180,0.8)";
+ctx.font=this.size+"px Arial";
+ctx.fillText("💖",this.x,this.y);
+}
+}
+
+for(let i=0;i<50;i++){hearts.push(new Heart());}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+hearts.forEach(h=>{h.update();h.draw();});
+requestAnimationFrame(animate);
+}
+animate();
+
+function unlock(){
+if(document.getElementById("pass").value.toLowerCase()=="milly"){
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("mainContent").style.display="block";
+startCounter();
+}
+}
+
+function startCounter(){
+let count=0;
+setInterval(()=>{
+count++;
+document.getElementById("counter").innerText="Infinity Love Counter: "+count+" ♾️";
+},1000);
+}
+
+function showSurprise(){
+document.getElementById("surprise").style.display="block";
+fireworks();
+}
+
+function fireworks(){
+for(let i=0;i<100;i++){
+ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+ctx.beginPath();
+ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,5,0,Math.PI*2);
+ctx.fill();
+}
+}
+
+</script>
+
+</body>
+</html>
